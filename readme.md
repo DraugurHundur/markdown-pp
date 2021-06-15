@@ -309,22 +309,6 @@ will not be displayed if `/tmp/foobar.txt` does not exist, but if it does exist:
      The file exists and will be included here
      <FOOBAR.TXT CONTENT>
 
-<a name="conditionalblocks"></a>
-
-### 2.8\. Conditional blocks
-
-Based on the existence of a file, a block can be included or discarded, e.g. :
-
-    !IFEXISTS "/tmp/foobar.txt"
-    The file exists and will be included here
-    !INCLUDE "/tmp/foobar.txt"
-    !ENDIFEXISTS
-
-will not be displayed if `/tmp/foobar.txt` does not exist, but if it does exist:
-
-     The file exists and will be included here
-     <FOOBAR.TXT CONTENT>
-
 <a name="examples"></a>
 
 3\. Examples
