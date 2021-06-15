@@ -56,6 +56,22 @@ Title
         output.seek(0)
         self.assertEqual(output.read(), result)
 
+    def test_conditional_test_file_no_file(self):
+        input = StringIO('foo\n!IFEXISTS "datafiles/non_existing_file.mdpp"\nbar\n!ENDIFEXISTS')
+        result = 'foo\n'
+        output = StringIO()
+        MarkdownPP(input=input, modules=['ifexists'], output=output)
+        output.seek(0)
+        self.assertEqual(output.read(), result)
+
+    def test_conditional_test_file_existing_file(self):
+        input = StringIO('foo\n!IFEXISTS "datafiles/test_empty_glob.mdpp"\nbar\n!ENDIFEXISTS')
+        result = 'foo\nbar\n'
+        output = StringIO()
+        MarkdownPP(input=input, modules=['ifexists'], output=output)
+        output.seek(0)
+        self.assertEqual(output.read(), result)
+
     def test_empty_glob_should_not_lead_to_index_errors(self):
         input = StringIO('!INCLUDE "datafiles/test_empty_glob.mdpp"\n')
         result = '# Test Header\n'
@@ -93,6 +109,20 @@ File 01.md
         output = StringIO()
         MarkdownPP(input=input, modules=['includeurl'], output=output)
 
+        output.seek(0)
+        self.assertEqual(output.read(), result)
+
+
+    def test_include_issue66(self):
+        input = StringIO('foobar\n!INCLUDE "datafiles/test_include_code.mdpp", 2')
+        result = """foobar
+```
+# uname -a
+Linux mymachine 4.18.0-0.bpo.1-amd64 #1 SMP Debian 4.18.6-1~bpo9+1 (2018-09-13) x86_64 GNU/Linux
+```
+"""
+        output = StringIO()
+        MarkdownPP(input=input, modules=['include'], output=output)
         output.seek(0)
         self.assertEqual(output.read(), result)
 
