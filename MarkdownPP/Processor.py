@@ -29,6 +29,9 @@ class Processor:
 
     def __init__(self, encoding):
         self.encoding = encoding
+        self.modules = []
+        self.data = []
+        self.transforms = {}
 
     def register(self, module):
         """
