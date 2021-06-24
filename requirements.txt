@@ -1,3 +1,4 @@
 watchdog~=2.1
 # Only required to run the tests
 Pillow
+pre-commit
