@@ -10,6 +10,7 @@ dev:
 	python setup.py develop
 
 upload: readme.md
+	@echo "Uploading sources..."
 	python setup.py sdist upload
 
 lint:
