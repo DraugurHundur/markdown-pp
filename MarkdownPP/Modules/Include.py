@@ -52,7 +52,7 @@ class Include(Module):
 
     def include_file(self, filename, pwd="", shift=0):
         try:
-            f = open(filename, "r", encoding = self.encoding)
+            f = open(filename, "r", encoding=self.encoding)
             data = f.readlines()
             f.close()
 
@@ -88,8 +88,8 @@ class Include(Module):
                             elif data[linenum][0] == '-' and isunderlined:
                                 data[linenum] = '### ' + data[linenum - 1]
                                 to_del.append(linenum - 1)
-                        for l in to_del:
-                            del data[l]
+                        for line_to_be_deleted in to_del:
+                            del data[line_to_be_deleted]
 
                 linenum += 1
 

@@ -68,7 +68,8 @@ Title
         """Tests if the include works with recursive files and relative
         include path and globbing.
         """
-        input = StringIO('yay\n!INCLUDE "datafiles/test_include_recursive.mdpp"')
+        input = StringIO(
+            'yay\n!INCLUDE "datafiles/test_include_recursive.mdpp"')
         result = """yay
 # Parent
 # File 1 Header
@@ -119,26 +120,26 @@ File 01.md
         result = """
         # Document Title
 
-        1\.  [Header 1](#header1)
-        1.1\.  [Header 1.a](#header1.a)
-        2\.  [Header 2](#header2)
+        1\\.  [Header 1](#header1)
+        1.1\\.  [Header 1.a](#header1.a)
+        2\\.  [Header 2](#header2)
 
         <a name="header1"></a>
 
-        ## 1\. Header 1
+        ## 1\\. Header 1
         <a name="header1.a"></a>
 
-        ### 1.1\. Header 1.a
+        ### 1.1\\. Header 1.a
         <a name="header2"></a>
 
-        ## 2\. Header 2"""
+        ## 2\\. Header 2"""
 
         output = StringIO()
         MarkdownPP(input=input, modules=['tableofcontents'], output=output)
 
         output.seek(0)
-        self.assertEqual([l.strip() for l in output.readlines()],
-                         [l.strip() for l in result.split('\n')])
+        self.assertEqual([lines.strip() for lines in output.readlines()],
+                         [lines.strip() for lines in result.split('\n')])
 
     def test_toc_with_code_block(self):
         input = StringIO(
@@ -149,23 +150,23 @@ File 01.md
             '``` \n'
             '# Header 2\n')
 
-        result = """1\.  [Header 1](#header1)
-        2\.  [Header 2](#header2)
+        result = """1\\.  [Header 1](#header1)
+        2\\.  [Header 2](#header2)
         <a name="header1"></a>
 
-        # 1\. Header 1
+        # 1\\. Header 1
         ```
         code block
         ```
         <a name="header2"></a>
-        
-        # 2\. Header 2"""
+
+        # 2\\. Header 2"""
 
         output = StringIO()
         MarkdownPP(input=input, modules=['tableofcontents'], output=output)
         output.seek(0)
-        self.assertEqual([l.strip() for l in output.readlines()],
-                         [l.strip() for l in result.split('\n')])
+        self.assertEqual([lines.strip() for lines in output.readlines()],
+                         [lines.strip() for lines in result.split('\n')])
 
     def test_reference(self):
         input = StringIO('\n!REF\n\n[github]: http://github.com "GitHub"')
@@ -180,7 +181,7 @@ File 01.md
 
     @unittest.expectedFailure
     def test_latexrender(self):
-        input = StringIO('$\displaystyle 1 + 1 = 2 $')
+        input = StringIO('$\\displaystyle 1 + 1 = 2 $')
         result_re = (r'!\[\\displaystyle 1 \+ 1 = 2 \]'
                      r'\(http:\/\/quicklatex\.com\/.*\.png "'
                      r'\\displaystyle 1 \+ 1 = 2 "\)')
@@ -253,11 +254,12 @@ File 01.md
             self.assertEqual(target_out, temp_outfile.read().decode('utf-8'))
 
     def test_include_code(self):
-        input = StringIO('foo\n!INCLUDECODE "datafiles/test_include_code.py"\nbar')
+        input = StringIO(
+            'foo\n!INCLUDECODE "datafiles/test_include_code.py"\nbar')
         result = """foo
 ```
 def main():
-    print "Hello World"
+    print("Hello World")
 
 
 if __name__ == '__main__':
@@ -272,19 +274,21 @@ bar"""
         self.assertEqual(output.read(), result)
 
     def test_include_code_lines(self):
-        input = StringIO('foo\n!INCLUDECODE "datafiles/test_include_code_2.py" (python), 1:10\nbar')
+        input = StringIO(
+            'foo\n!INCLUDECODE "datafiles/test_include_code_2.py" (python)'
+            ', 1:10\nbar')
         result = """foo
 ```python
 def main():
-    print "Hello World"
-
-
-
-
+    print("Hello World")
+# line 3
+# line 4
+# line 5
+# line 6
+# line 7
 
 
 if __name__ == '__main__':
-    main()
 
 ```
 bar"""
@@ -295,7 +299,8 @@ bar"""
         self.assertEqual(output.read(), result)
 
     def test_include_code_single_line(self):
-        input = StringIO('foo\n!INCLUDECODE "datafiles/test_include_code.py",1\nbar')
+        input = StringIO(
+            'foo\n!INCLUDECODE "datafiles/test_include_code.py",1\nbar')
         result = """foo
 ```
 def main():
@@ -309,7 +314,8 @@ bar"""
         self.assertEqual(output.read(), result)
 
     def test_include_code_multiline_1(self):
-        input = StringIO('foo\n!INCLUDECODE "datafiles/test_include_code.py",5:\nbar')
+        input = StringIO(
+            'foo\n!INCLUDECODE "datafiles/test_include_code.py",5:\nbar')
         result = """foo
 ```
 if __name__ == '__main__':
@@ -324,7 +330,8 @@ bar"""
         self.assertEqual(output.read(), result)
 
     def test_include_code_multiline_2(self):
-        input = StringIO('foo\n!INCLUDECODE "datafiles/test_include_code.py",5:5\nbar')
+        input = StringIO(
+            'foo\n!INCLUDECODE "datafiles/test_include_code.py",5:5\nbar')
         result = """foo
 ```
 if __name__ == '__main__':
@@ -338,11 +345,12 @@ bar"""
         self.assertEqual(output.read(), result)
 
     def test_include_code_multiline_3(self):
-        input = StringIO('foo\n!INCLUDECODE "datafiles/test_include_code.py",:3\nbar')
+        input = StringIO(
+            'foo\n!INCLUDECODE "datafiles/test_include_code.py",:3\nbar')
         result = """foo
 ```
 def main():
-    print "Hello World"
+    print("Hello World")
 
 
 ```
@@ -354,11 +362,12 @@ bar"""
         self.assertEqual(output.read(), result)
 
     def test_include_code_lang(self):
-        input = StringIO('foo\n!INCLUDECODE "datafiles/test_include_code.py"(python)\nbar')
+        input = StringIO(
+            'foo\n!INCLUDECODE "datafiles/test_include_code.py"(python)\nbar')
         result = """foo
 ```python
 def main():
-    print "Hello World"
+    print("Hello World")
 
 
 if __name__ == '__main__':
@@ -373,11 +382,13 @@ bar"""
         self.assertEqual(output.read(), result)
 
     def test_include_code_lang_with_multiline(self):
-        input = StringIO('foo\n!INCLUDECODE "datafiles/test_include_code.py"(python),1:3\nbar')
+        input = StringIO(
+            'foo\n!INCLUDECODE "datafiles/test_include_code.py"(python)'
+            ',1:3\nbar')
         result = """foo
 ```python
 def main():
-    print "Hello World"
+    print("Hello World")
 
 
 ```
@@ -387,7 +398,6 @@ bar"""
 
         output.seek(0)
         self.assertEqual(output.read(), result)
-
 
 
 if __name__ == '__main__':
