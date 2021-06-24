@@ -26,3 +26,7 @@ test: lint
 
 clean:
 	rm -rf build dist README MANIFEST MarkdownPP.egg-info
+
+update-pre-commit-hooks:
+	python -m pip install pre-commit
+	pre-commit autoupdate

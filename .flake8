@@ -1,0 +1,8 @@
+[flake8]
+max_line_length = 88
+max-line-length = 88
+# show line of source code in output
+show_source = true
+select = C,E,F,W,B,B950
+extend-ignore = E203, E501
+

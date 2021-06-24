@@ -1,0 +1,7 @@
+# Only required to run the tests
+Pillow
+flake8
+black
+pre-commit
+
+
