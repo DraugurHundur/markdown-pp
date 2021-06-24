@@ -138,8 +138,8 @@ File 01.md
         MarkdownPP(input=input, modules=['tableofcontents'], output=output)
 
         output.seek(0)
-        self.assertEqual([l.strip() for l in output.readlines()],
-                         [l.strip() for l in result.split('\n')])
+        self.assertEqual([lines.strip() for lines in output.readlines()],
+                         [lines.strip() for lines in result.split('\n')])
 
     def test_toc_with_code_block(self):
         input = StringIO(
@@ -165,8 +165,8 @@ File 01.md
         output = StringIO()
         MarkdownPP(input=input, modules=['tableofcontents'], output=output)
         output.seek(0)
-        self.assertEqual([l.strip() for l in output.readlines()],
-                         [l.strip() for l in result.split('\n')])
+        self.assertEqual([lines.strip() for lines in output.readlines()],
+                         [lines.strip() for lines in result.split('\n')])
 
     def test_reference(self):
         input = StringIO('\n!REF\n\n[github]: http://github.com "GitHub"')

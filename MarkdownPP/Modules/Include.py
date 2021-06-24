@@ -88,8 +88,8 @@ class Include(Module):
                             elif data[linenum][0] == '-' and isunderlined:
                                 data[linenum] = '### ' + data[linenum - 1]
                                 to_del.append(linenum - 1)
-                        for l in to_del:
-                            del data[l]
+                        for line_to_be_deleted in to_del:
+                            del data[line_to_be_deleted]
 
                 linenum += 1
 
