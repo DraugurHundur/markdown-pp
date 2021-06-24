@@ -12,7 +12,9 @@ dev:
 	$(PY) setup.py develop
 
 upload: readme.md
+	@echo "Uploading sources..."
 	$(PY) setup.py sdist upload
+
 
 lint:
 	flake8 --show-source MarkdownPP
